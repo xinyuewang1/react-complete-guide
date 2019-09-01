@@ -95,6 +95,14 @@ class App extends Component {
   };
 
   render() {
+    const style = {
+      backGroundColor: "white",
+      font: "inherit",
+      border: "1px solid blue",
+      padding: "8px",
+      cursor: "pointer"
+    };
+
     return (
       // Only one root element shall be added. It looks like HTML, but it's JS!
       <div className="App">
@@ -102,7 +110,10 @@ class App extends Component {
         <p>something.</p>
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.switchNameHandler.bind(this, "Fyne")}>
+        <button
+          style={style}
+          onClick={this.switchNameHandler.bind(this, "Fyne")}
+        >
           Switch Name
         </button>
         <Person
