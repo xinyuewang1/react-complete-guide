@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Radium, { StyleRoot } from "radium";
 // import React, { useState } from "react";
 import "./App.css";
 // Again, when import, shall be capital start. It is case sensitive.
@@ -142,7 +143,12 @@ class App extends Component {
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
+      // Hover available by radium
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black"
+      }
     };
 
     let persons = null;
@@ -187,6 +193,10 @@ class App extends Component {
 
       // Even though style is a constant, but we can still modify a part of it.
       style.backgroundColor = "red";
+      style[":hover"] = {
+        backgroundColor: "salmon",
+        color: "black"
+      };
     }
 
     // let classes = ["red", "bold"].join(" ");
@@ -200,20 +210,21 @@ class App extends Component {
 
     return (
       // Only one root element shall be added. It looks like HTML, but it's JS!
-      <div className="App">
-        <h1>Welcome to RaH!!!</h1>
-        {/* dont forget the classes shall be string instead of list below. */}
-        <p className={classes.join(" ")}>something.</p>
-        {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
+      <StyleRoot>
+        <div className="App">
+          <h1>Welcome to RaH!!!</h1>
+          {/* dont forget the classes shall be string instead of list below. */}
+          <p className={classes.join(" ")}>something.</p>
+          {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.togglePersonsHandler} style={style}>
-          Toggle Persons
-        </button>
+          <button onClick={this.togglePersonsHandler} style={style}>
+            Toggle Persons
+          </button>
 
-        {/* >>> A way to add JS in the below...but you can't use block statement :(
+          {/* >>> A way to add JS in the below...but you can't use block statement :(
           in another way, no if else.
         ) checker... but this could get nasty and hard to keep track...*/}
-        {/* {this.state.showPerson ? (
+          {/* {this.state.showPerson ? (
           // react.create element below
           <div>
             <Person
@@ -230,12 +241,13 @@ class App extends Component {
             <Person name="Claire" age="45" />
           </div>
         ) : null} */}
-        {/* <<< */}
+          {/* <<< */}
 
-        {/* >>> The js way >>> Recommended.*/}
-        {persons}
-        {/* <<< The js way <<< */}
-      </div>
+          {/* >>> The js way >>> Recommended.*/}
+          {persons}
+          {/* <<< The js way <<< */}
+        </div>
+      </StyleRoot>
     );
 
     // Behind the scene...
@@ -245,4 +257,5 @@ class App extends Component {
 }
 // <<< Traditional react style. <<<
 
-export default App;
+// Higher order component
+export default Radium(App);
