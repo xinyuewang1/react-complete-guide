@@ -95,6 +95,7 @@ class App extends Component {
   };
 
   render() {
+    // In-line style.
     const style = {
       backGroundColor: "white",
       font: "inherit",
