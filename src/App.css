@@ -3,3 +3,10 @@
 }
 
 /* Be aware that any changes put in here will be for all components. */
+.red {
+  color: rebeccapurple;
+}
+
+.bold {
+  font-weight: bold;
+}

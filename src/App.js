@@ -137,7 +137,8 @@ class App extends Component {
   render() {
     // In-line style.
     const style = {
-      backGroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
@@ -183,15 +184,31 @@ class App extends Component {
           {/* <<< The old way to hard code a list of person */}
         </div>
       );
+
+      // Even though style is a constant, but we can still modify a part of it.
+      style.backgroundColor = "red";
     }
+
+    // let classes = ["red", "bold"].join(" ");
+    let classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
+    }
+
     return (
       // Only one root element shall be added. It looks like HTML, but it's JS!
       <div className="App">
         <h1>Welcome to RaH!!!</h1>
-        <p>something.</p>
+        {/* dont forget the classes shall be string instead of list below. */}
+        <p className={classes.join(" ")}>something.</p>
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.togglePersonsHandler} style={style}>Toggle Persons</button>
+        <button onClick={this.togglePersonsHandler} style={style}>
+          Toggle Persons
+        </button>
 
         {/* >>> A way to add JS in the below...but you can't use block statement :(
           in another way, no if else.
