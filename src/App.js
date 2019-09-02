@@ -62,25 +62,40 @@ class App extends Component {
   // change state, will lead to a re-render.
   state = {
     persons: [
-      { name: "Alice", age: 23 },
-      { name: "Bob", age: 42 },
-      { name: "Claire", age: 45 },
-      { name: "David", age: 98 }
+      { id: "1", name: "Alice", age: 23 },
+      { id: "2", name: "Bob", age: 42 },
+      { id: "3", name: "Claire", age: 45 },
+      { id: "4", name: "David", age: 98 }
     ],
-    otherState: "some other value"
+    otherState: "some other value",
+    showPerson: false
   };
 
-  switchNameHandler = newName => {
-    // console.log("was clicked");
-    this.setState({
-      persons: [
-        { name: newName, age: 233 },
-        { name: "Bob", age: 42 },
-        { name: "Claire", age: 45 },
-        { name: "David", age: 98 },
-        { name: "Elanie", age: 55 }
-      ]
-    });
+  // switchNameHandler = newName => {
+  //   // console.log("was clicked");
+  //   this.setState({
+  //     persons: [
+  //       { name: newName, age: 233 },
+  //       { name: "Bob", age: 42 },
+  //       { name: "Claire", age: 45 },
+  //       { name: "David", age: 98 },
+  //       { name: "Elanie", age: 55 }
+  //     ]
+  //   });
+  // };
+
+  deletePersonHandler = personIndex => {
+    // Flaw in this flow: The actually state has been manipulated.
+    // const persons = this.state.persons;
+
+    // solution1: Make a copy
+    // const persons = this.state.persons.slice();
+
+    // solution2: es6, spread
+    const persons = [...this.state.persons];
+
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   };
 
   nameChangeHandler = event => {
@@ -94,7 +109,52 @@ class App extends Component {
     });
   };
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPerson;
+    this.setState({ showPerson: !doesShow });
+  };
+
+  // When react re-render, this whole render method will be called.
   render() {
+    let persons = null;
+
+    // I can add normal js code here since it's not inside jsx.
+    if (this.state.showPerson) {
+      persons = (
+        <div>
+          {/* vanilla JS: js -> jsx */}
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                // why we need key: If no key assigned, everytime a re-render needed
+                // for ths llist component, the whole list will be re-rendered since
+                // react don't know which ones shall be passed. This could be very
+                // inefficient for long list.
+                key={person.id}
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+              />
+            );
+          })}
+
+          {/* >>> The old way to hard code a list of person */}
+          {/* <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            // Another way to pass parameter into methon. This could be less efficient because it
+            // might cause re-render.
+            click={() => this.switchNameHandler("Gin")}
+            changed={this.nameChangeHandler}
+          />
+          <Person name="Bob" age="23">
+            My hobbies: rading
+          </Person>
+          <Person name="Claire" age="45" /> */}
+          {/* <<< The old way to hard code a list of person */}
+        </div>
+      );
+    }
     return (
       // Only one root element shall be added. It looks like HTML, but it's JS!
       <div className="App">
@@ -102,21 +162,33 @@ class App extends Component {
         <p>something.</p>
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.switchNameHandler.bind(this, "Fyne")}>
-          Switch Name
-        </button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          // Another way to pass parameter into methon. This could be less efficient because it
-          // might cause re-render.
-          click={() => this.switchNameHandler("Gin")}
-          changed={this.nameChangeHandler}
-        />
-        <Person name="Bob" age="23">
-          My hobbies: rading
-        </Person>
-        <Person name="Claire" age="45" />
+        <button onClick={this.togglePersonsHandler}>Toggle Persons</button>
+
+        {/* >>> A way to add JS in the below...but you can't use block statement :(
+          in another way, no if else.
+        ) checker... but this could get nasty and hard to keep track...*/}
+        {/* {this.state.showPerson ? (
+          // react.create element below
+          <div>
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age}
+              // Another way to pass parameter into methon. This could be less efficient because it
+              // might cause re-render.
+              click={() => this.switchNameHandler("Gin")}
+              changed={this.nameChangeHandler}
+            />
+            <Person name="Bob" age="23">
+              My hobbies: rading
+            </Person>
+            <Person name="Claire" age="45" />
+          </div>
+        ) : null} */}
+        {/* <<< */}
+
+        {/* >>> The js way >>> Recommended.*/}
+        {persons}
+        {/* <<< The js way <<< */}
       </div>
     );
 
