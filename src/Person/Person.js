@@ -8,7 +8,7 @@
 import React from "react";
 // import Radium from "radium";
 // don't forget to import css.
-import "./Person.css";
+import styles from "./Person.css";
 
 // Op2
 // converntional, function with lowercase start.
@@ -21,7 +21,7 @@ const person = props => {
   // could excute one line js in {}, could be a function, dynamic content.
   return (
     // <div className="Person" style={style}>
-    <div className="Person">
+    <div className={styles.Person}>
       {/* Pass method as props. */}
       <p onClick={props.click}>
         {/* for class, here shall be this.props.name */}
