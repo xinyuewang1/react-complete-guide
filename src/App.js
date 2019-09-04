@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Radium, { StyleRoot } from "radium";
 // import React, { useState } from "react";
-import styles from "./App.css";
+import classes from "./App.css";
 // Again, when import, shall be capital start. It is case sensitive.
 import Person from "./Person/Person";
 
@@ -136,20 +136,7 @@ class App extends Component {
 
   // When react re-render, this whole render method will be called.
   render() {
-    // In-line style.
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer"
-      // Hover available by radium
-      // ":hover": {
-      //   backgroundColor: "lightgreen",
-      //   color: "black"
-      // }
-    };
+    let btnClass = "";
 
     let persons = null;
 
@@ -191,8 +178,9 @@ class App extends Component {
         </div>
       );
 
+      btnClass = classes.Red;
       // Even though style is a constant, but we can still modify a part of it.
-      style.backgroundColor = "red";
+      // style.backgroundColor = "red";
       // style[":hover"] = {
       //   backgroundColor: "salmon",
       //   color: "black"
@@ -200,25 +188,28 @@ class App extends Component {
     }
 
     // let classes = ["red", "bold"].join(" ");
-    let classes = [];
+    let assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push(styles.red);
+      // classes.push("red");
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push(styles.bold);
+      // classes.push("bold");
+      assignedClasses.push(classes.bold);
     }
-    console.log(classes);
+
     return (
-      // Only one root element shall be added. It looks like HTML, but it's JS!
+      // Only one root elem ent shall be added. It looks like HTML, but it's JS!
       // <StyleRoot>
-      <div className={styles.App}>
+      // <div className="App">
+      <div className={classes.App}>
         <h1>Welcome to RaH!!!</h1>
         {/* dont forget the classes shall be string instead of list below. */}
-        <p className={classes.join(" ")}>something.</p>
+        <p className={assignedClasses.join(" ")}>something.</p>
         {/* <p>something.</p> */}
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.togglePersonsHandler} style={style}>
+        <button onClick={this.togglePersonsHandler} className={btnClass}>
           Toggle Persons
         </button>
 
