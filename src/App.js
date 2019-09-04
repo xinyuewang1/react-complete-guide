@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Radium, { StyleRoot } from "radium";
 // import React, { useState } from "react";
-import "./App.css";
+import classes from "./App.css";
 // Again, when import, shall be capital start. It is case sensitive.
 import Person from "./Person/Person";
 
@@ -200,22 +200,25 @@ class App extends Component {
     }
 
     // let classes = ["red", "bold"].join(" ");
-    // let classes = [];
-    // if (this.state.persons.length <= 2) {
-    //   classes.push("red");
-    // }
-    // if (this.state.persons.length <= 1) {
-    //   classes.push("bold");
-    // }
+    let assignedClasses = [];
+    if (this.state.persons.length <= 2) {
+      // classes.push("red");
+      assignedClasses.push(classes.red);
+    }
+    if (this.state.persons.length <= 1) {
+      // classes.push("bold");
+      assignedClasses.push(classes.bold);
+    }
 
     return (
       // Only one root element shall be added. It looks like HTML, but it's JS!
       // <StyleRoot>
-      <div className="App">
+      // <div className="App">
+      <div className={classes.App}>
         <h1>Welcome to RaH!!!</h1>
         {/* dont forget the classes shall be string instead of list below. */}
-        {/* <p className={classes.join(" ")}>something.</p> */}
-        <p>something.</p>
+        <p className={assignedClasses.join(" ")}>something.</p>
+        {/* <p>something.</p> */}
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
         <button onClick={this.togglePersonsHandler} style={style}>
