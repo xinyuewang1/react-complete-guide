@@ -136,20 +136,7 @@ class App extends Component {
 
   // When react re-render, this whole render method will be called.
   render() {
-    // In-line style.
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer"
-      // Hover available by radium
-      // ":hover": {
-      //   backgroundColor: "lightgreen",
-      //   color: "black"
-      // }
-    };
+    let btnClass = "";
 
     let persons = null;
 
@@ -191,8 +178,9 @@ class App extends Component {
         </div>
       );
 
+      btnClass = classes.Red;
       // Even though style is a constant, but we can still modify a part of it.
-      style.backgroundColor = "red";
+      // style.backgroundColor = "red";
       // style[":hover"] = {
       //   backgroundColor: "salmon",
       //   color: "black"
@@ -211,7 +199,7 @@ class App extends Component {
     }
 
     return (
-      // Only one root element shall be added. It looks like HTML, but it's JS!
+      // Only one root elem ent shall be added. It looks like HTML, but it's JS!
       // <StyleRoot>
       // <div className="App">
       <div className={classes.App}>
@@ -221,7 +209,7 @@ class App extends Component {
         {/* <p>something.</p> */}
         {/* capital C in onClick and not () behind the method name; One way to pass parameter to 
         method is bind;*/}
-        <button onClick={this.togglePersonsHandler} style={style}>
+        <button onClick={this.togglePersonsHandler} className={btnClass}>
           Toggle Persons
         </button>
 
