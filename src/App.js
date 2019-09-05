@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import classes from "./App.css";
 // Again, when import, shall be capital start. It is case sensitive.
 import Person from "./Person/Person";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 
 // >>> React Hooks style. >>>
 // An important difference between hook and class style is that hook rewrite the state with setter (not merge), so anything missing will be gone.
@@ -147,17 +148,20 @@ class App extends Component {
           {/* vanilla JS: js -> jsx */}
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                // why we need key: If no key assigned, everytime a re-render needed
-                // for ths llist component, the whole list will be re-rendered since
-                // react don't know which ones shall be passed. This could be very
-                // inefficient for long list.
-                key={person.id}
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                changed={event => this.nameChangeHandler(event, person.id)}
-              />
+              // The key always has to be in the outter element in a map method.
+              <ErrorBoundary key={person.id}>
+                <Person
+                  // why we need key: If no key assigned, everytime a re-render needed
+                  // for ths llist component, the whole list will be re-rendered since
+                  // react don't know which ones shall be passed. This could be very
+                  // inefficient for long list.
+
+                  name={person.name}
+                  age={person.age}
+                  click={() => this.deletePersonHandler(index)}
+                  changed={event => this.nameChangeHandler(event, person.id)}
+                />
+              </ErrorBoundary>
             );
           })}
 
