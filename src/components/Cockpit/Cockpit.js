@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./Cockpit.css";
 
 const cockpit = props => {
+  // You can have multiple useEffect.
+  useEffect(() => {
+    console.log("[Cockpit.js] useEffect");
+    // Http request..
+    setTimeout(() => {
+      alert("saved data to cloud!");
+    }, 1000);
+    // To be more precise, the return below runs before the main useEffect
+    // function but after the first render cycle.
+    return () => {
+      console.log("[Cockpit.js] cleanup work in useEffect.");
+    };
+    //   }, [props.persons]); //control when this will happen
+    //   just need for componentDidMount, pass a empty [].
+  }, []);
+
+  useEffect(() => {
+    console.log("[Cockpit.js] 2nd useEffect");
+    return () => {
+      console.log("[Cockpit.js] cleanup work in 2nd useEffect.");
+    };
+  });
+
   const assignedClasses = [];
   let btnClass = "";
 
