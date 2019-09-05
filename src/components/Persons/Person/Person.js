@@ -1,40 +1,27 @@
-// Conventional to have Captial first letter.
-
-// Op1
-// function person() {
-//     return;
-// }
-
-import React from "react";
-// import Radium from "radium";
-// don't forget to import css.
-// import "./Person.css";
+import React, { Component } from "react";
 import classes from "./Person.css";
 
-// Op2
-// Functional component. converntional, function with lowercase start.
-const person = props => {
-  // const style = {
-  //   "@media (min-width: 500px)": {
-  //     width: "450px"
-  //   }
-  // };
-  // could excute one line js in {}, could be a function, dynamic content.
-
-  return (
-    // <div className="Person" style={style}>
-    <div className={classes.Person}>
-      {/* Pass method as props. */}
-      <p onClick={props.click}>
-        {/* for class, here shall be this.props.name */}
-        I'm {props.name} and I am {props.age} years old!
-      </p>
-      <p>{props.children}</p>
-      {/* Two way binding. */}
-      <input type="text" onChange={props.changed} value={props.name} />
-    </div>
-  );
-};
+class Person extends Component {
+  render() {
+    console.log("[Person.js] rendering...");
+    return (
+      <div className={classes.Person}>
+        {/* Pass method as props. */}
+        <p onClick={this.props.click}>
+          {/* for class, here shall be this.props.name */}
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        {/* Two way binding. */}
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
 
 // export default Radium(person);
-export default person;
+export default Person;

@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-// import Radium, { StyleRoot } from "radium";
-// import React, { useState } from "react";
 import classes from "./App.css";
-// Again, when import, shall be capital start. It is case sensitive.
+
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 
-// >>> Traditional react class style. <<<
 class App extends Component {
-  // manage state within class. reserved word: state, children.
-  // change state, will lead to a re-render.
+  constructor(props) {
+    super(props);
+    console.log("[App.js] constructor");
+  }
+  // This is just a more modern syntax, of couse you can build constructor and
+  // set this.state inside the constructor.
   state = {
     persons: [
       { id: "1", name: "Alice", age: 23 },
@@ -21,8 +22,21 @@ class App extends Component {
     showPerson: false
   };
 
+  static getDerivedStateFromProps(props, state) {
+    console.log("[App.js] getDerivedStateFromProps", props);
+    return state;
+  }
+
+  // said will be removed soon.
+  // componentWillMount() {
+  //   console.log(["App.js] componentWillMount"]);
+  // }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount");
+  }
+
   deletePersonHandler = personIndex => {
-    // solution2: es6, spread
     const persons = [...this.state.persons];
 
     persons.splice(personIndex, 1);
@@ -38,12 +52,8 @@ class App extends Component {
       ...this.state.persons[personIndex]
     };
 
-    // Substitute way...
-    // const person = Object.assign({}, this.state.persons[personIndex]);
-
     person.name = event.target.value;
 
-    // A copy of persons list.
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
@@ -55,11 +65,10 @@ class App extends Component {
     this.setState({ showPerson: !doesShow });
   };
 
-  // When react re-render, this whole render method will be called.
   render() {
+    console.log("[App.js] render");
     let persons = null;
 
-    // I can add normal js code here since it's not inside jsx.
     if (this.state.showPerson) {
       persons = (
         <Persons
@@ -68,29 +77,22 @@ class App extends Component {
           changed={this.nameChangeHandler}
         />
       );
-
     }
 
     return (
-      // Only one root elem ent shall be added. It looks like HTML, but it's JS!
-
       <div className={classes.App}>
         <Cockpit
+          // where need to use 'this'
+          title={this.props.appTitle}
           showPersons={this.state.showPerson}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
         />
-        {/* >>> The js way >>> Recommended.*/}
+
         {persons}
-        {/* <<< The js way <<< */}
       </div>
     );
-
-    // Behind the scene...
-    // return React.createElement('div', {className: 'App'},
-    // React.createElement('h1', null, 'Hey Jude!'));
   }
 }
-// <<< Traditional react style. <<<
 
 export default App;

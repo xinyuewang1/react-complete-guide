@@ -1,23 +1,41 @@
-import React from "react";
+import React, { Component } from "react";
 import Person from "./Person/Person";
 
-// es6, oneline return, remember you're writing jsx here.
-const persons = props =>
-  props.persons.map((person, index) => {
-    return (
-      // The key always has to be in the outter element in a map method.
-      <Person
-        // why we need key: If no key assigned, everytime a re-render needed
-        // for ths llist component, the whole list will be re-rendered since
-        // react don't know which ones shall be passed. This could be very
-        // inefficient for long list.
-        key={person.id}
-        name={person.name}
-        age={person.age}
-        click={() => props.clicked(index)}
-        changed={event => props.changed(event, person.id)}
-      />
-    );
-  });
+class Persons extends Component {
+  //   static getDerivedStateFromProps(props, state) {
+  //     console.log("[Persons.js] getDerivedStateFromProps");
+  //     return state;
+  //   }
 
-export default persons;
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[Persons.js] shoudComponentUpdate");
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log("[Persons.js] getSnapeshotBeforeUpdate");
+    return { message: "snapshot!" };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("[Persons.js] componentDidUpdate");
+    console.log(snapshot);
+  }
+
+  render() {
+    console.log(["Persons.js] rendering..."]);
+    return this.props.persons.map((person, index) => {
+      return (
+        <Person
+          key={person.id}
+          name={person.name}
+          age={person.age}
+          click={() => this.props.clicked(index)}
+          changed={event => this.props.changed(event, person.id)}
+        />
+      );
+    });
+  }
+}
+
+export default Persons;

@@ -6,5 +6,8 @@ import registerServiceWorker from "./registerServiceWorker";
 
 // Typically you only render one component, and everything else
 // nested inside.
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <App appTitle="Person Manager" />,
+  document.getElementById("root")
+);
 registerServiceWorker();
