@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import classes from "./Cockpit.css";
 
 const cockpit = props => {
-  // You can have multiple useEffect.
+  const toggleBtnRef = useRef(null);
+
+  // You can have multiple useEffect. This run after return...
   useEffect(() => {
     console.log("[Cockpit.js] useEffect");
     // Http request..
-    setTimeout(() => {
-      alert("saved data to cloud!");
-    }, 1000);
+    // setTimeout(() => {
+    //   alert("saved data to cloud!");
+    // }, 1000);
+
+    // This click will mount the person list immediately.
+    toggleBtnRef.current.click();
+
     // To be more precise, the return below runs before the main useEffect
     // function but after the first render cycle.
     return () => {
@@ -47,7 +53,7 @@ const cockpit = props => {
 
       <p className={assignedClasses.join(" ")}>something.</p>
 
-      <button onClick={props.clicked} className={btnClass}>
+      <button ref={toggleBtnRef} onClick={props.clicked} className={btnClass}>
         Toggle Persons
       </button>
     </div>
