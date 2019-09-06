@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 import classes from "./Person.css";
 
-import Aux from "../../../hoc/Aux";
+// import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Auxiliary";
 import withClass from "../../../hoc/withClass";
 import AuthContext from "../../../context/auth-context";
 
