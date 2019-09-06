@@ -6,6 +6,7 @@ import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 import withClass from "../hoc/withClass";
 import Aux from "../hoc/Aux";
+import AuthContext from "../context/auth-context";
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ class App extends Component {
     ],
     otherState: "some other value",
     showPerson: false,
-    showCockpit: true
+    showCockpit: true,
+    authenticated: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -73,6 +75,10 @@ class App extends Component {
     this.setState({ showPerson: !doesShow });
   };
 
+  loginHander = () => {
+    this.setState({ authenticated: true });
+  };
+
   render() {
     console.log("[App.js] render");
     let persons = null;
@@ -80,6 +86,7 @@ class App extends Component {
     if (this.state.showPerson) {
       persons = (
         <Persons
+          isAuthendicated={this.state.authenticated}
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangeHandler}
@@ -96,16 +103,23 @@ class App extends Component {
         >
           Remove Cockpit
         </button>
-        {this.state.showCockpit ? (
-          <Cockpit
-            // where need to use 'this'
-            title={this.props.appTitle}
-            showPersons={this.state.showPerson}
-            personsLength={this.state.persons.length}
-            clicked={this.togglePersonsHandler}
-          />
-        ) : null}
-        {persons}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHander
+          }}
+        >
+          {this.state.showCockpit ? (
+            <Cockpit
+              // where need to use 'this'
+              title={this.props.appTitle}
+              showPersons={this.state.showPerson}
+              personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler}
+            />
+          ) : null}
+          {persons}
+        </AuthContext.Provider>
       </Aux>
     );
   }

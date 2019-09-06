@@ -5,6 +5,7 @@ import classes from "./Person.css";
 
 import Aux from "../../../hoc/Aux";
 import withClass from "../../../hoc/withClass";
+import AuthContext from "../../../context/auth-context";
 
 class Person extends Component {
   constructor(props) {
@@ -21,6 +22,15 @@ class Person extends Component {
     console.log("[Person.js] rendering...");
     return (
       <Aux>
+        <AuthContext.Consumer>
+          {context =>
+            context.authenticated ? (
+              <p>Authenticated!</p>
+            ) : (
+              <p>Please log in! :(</p>
+            )
+          }
+        </AuthContext.Consumer>
         {/* Pass method as props. */}
         <p onClick={this.props.click}>
           {/* for class, here shall be this.props.name */}
