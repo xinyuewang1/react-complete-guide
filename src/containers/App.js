@@ -98,7 +98,7 @@ class App extends Component {
             // where need to use 'this'
             title={this.props.appTitle}
             showPersons={this.state.showPerson}
-            persons={this.state.persons}
+            personsLength={this.state.persons.length}
             clicked={this.togglePersonsHandler}
           />
         ) : null}

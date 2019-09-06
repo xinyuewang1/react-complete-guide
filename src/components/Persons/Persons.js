@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// Could use PureComponent if want to trigger update under all circumstances.
 import Person from "./Person/Person";
 
 class Persons extends Component {
@@ -9,7 +10,15 @@ class Persons extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("[Persons.js] shoudComponentUpdate");
-    return true;
+
+    // This is comparing pointers, so it would only work when manipulate
+    // persons happens in change pinter style (use copy, not change the
+    // original data directly.)
+    if (nextProps.persons !== this.props.persons) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
